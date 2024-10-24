@@ -23,7 +23,7 @@ public class UsuarioControlador {
     }
 
 
-    @GetMapping("/registro")
+    @GetMapping("/")
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("usuario", new Usuario());
         return "registro";
