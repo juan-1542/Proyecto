@@ -13,14 +13,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-@Entity(name = "usuarios")
-@Table
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
+
     @Id
-    @Column(name = "usu_nombre")
-    public String nombre;
-    @Column(name = "usu_contraseña")
-    public int contraseña;
+    @Column(name = "usu_nombre", nullable = false)
+    private String nombre;
 
-
+    @Column(name = "usu_contraseña", nullable = false)
+    private String contraseña;
 }
