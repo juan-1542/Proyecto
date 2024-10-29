@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Controller
 public class UsuarioControlador {
-
     private final UsuarioServicio usuarioServicio;
 
 
@@ -33,6 +32,7 @@ public class UsuarioControlador {
     @PostMapping("/registro")
     public String procesarRegistroUsuario(@ModelAttribute("usuario") Usuario usuario) {
         usuarioServicio.guardar(usuario);
-        return "redirect:/registroExitoso";
+        return "redirect:/GestionInventarios";
     }
 }
+

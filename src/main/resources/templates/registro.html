@@ -51,7 +51,8 @@
 <body>
 <div class="container">
     <h2>Registro de Usuario</h2>
-    <form th:action="@{/registro}" method="post">
+    <form th:action="@{/registro}" method="post" th:object="${usuarios}">
+
         <label for="nombre">Nombre de Usuario:</label>
         <input type="text" id="nombre" name="nombre" required>
 
