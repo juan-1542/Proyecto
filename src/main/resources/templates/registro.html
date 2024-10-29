@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
+    <title>Registro e Iniciar Sesión</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,6 +18,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px; /* Establecer un ancho fijo */
         }
         h2 {
             text-align: center;
@@ -46,13 +47,23 @@
         input[type="submit"]:hover {
             background-color: #45a049;
         }
+        .toggle-button {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .toggle-button a {
+            color: #008CBA;
+            text-decoration: none;
+            font-size: 14px;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h2>Registro de Usuario</h2>
-    <form th:action="@{/registro}" method="post" th:object="${usuarios}">
+    <h2>Registro e Iniciar Sesión</h2>
 
+    <!-- Formulario de Registro -->
+    <form th:action="@{/registro}" method="post" th:object="${usuarios}">
         <label for="nombre">Nombre de Usuario:</label>
         <input type="text" id="nombre" name="nombre" required>
 
@@ -61,6 +72,49 @@
 
         <input type="submit" value="Registrarse">
     </form>
+
+    <div class="toggle-button">
+        <a href="#" onclick="toggleForms()">¿Ya tienes cuenta? Inicia sesión aquí</a>
+    </div>
+
+    <!-- Formulario de Iniciar Sesión -->
+    <div id="loginForm" style="display:none;">
+        <form id="iniciarSesionForm" onsubmit="return iniciarSesion()">
+            <label for="loginNombre">Nombre de Usuario:</label>
+            <input type="text" id="loginNombre" name="nombre" required>
+
+            <label for="loginPassword">Contraseña:</label>
+            <input type="password" id="loginPassword" name="contraseña" required>
+
+            <input type="submit" value="Iniciar Sesión">
+        </form>
+
+        <div class="toggle-button">
+            <a href="#" onclick="toggleForms()">¿No tienes cuenta? Regístrate aquí</a>
+        </div>
+    </div>
 </div>
+
+<script>
+    function toggleForms() {
+        var registroForm = document.querySelector("form:first-of-type");
+        var loginForm = document.getElementById("loginForm");
+        if (registroForm.style.display === "none") {
+            registroForm.style.display = "block";
+            loginForm.style.display = "none";
+        } else {
+            registroForm.style.display = "none";
+            loginForm.style.display = "block";
+        }
+    }
+
+    function iniciarSesion() {
+        // Aquí puedes incluir la lógica para validar las credenciales con el backend
+        // Supongamos que la validación es exitosa y redirigimos al usuario
+        // Cambia la URL de redirección según sea necesario
+        window.location.href = "/GestionInventarios"; // Redirige a GestionInventarios
+        return false; // Evita el envío del formulario por defecto
+    }
+</script>
 </body>
 </html>
