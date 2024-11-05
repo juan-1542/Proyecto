@@ -2,7 +2,6 @@ package co.ucentral.Concesionario.servicios;
 
 import co.ucentral.Concesionario.persistencia.entidades.Usuario;
 import co.ucentral.Concesionario.persistencia.respositorios.UsuarioRepositorio;
-import jakarta.websocket.server.ServerEndpoint;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +11,29 @@ import java.util.List;
 @Service
 public class UsuarioServicio {
 
-    UsuarioRepositorio usuarioRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    public List<Usuario> obtenerTodos(){
-        List<Usuario> listado = (List<Usuario>) usuarioRepositorio.findAll();
-        return listado;
+
+    public List<Usuario> obtenerTodos() {
+        return (List<Usuario>) usuarioRepositorio.findAll();
     }
 
-    public boolean borrar(Usuario usuario){
-        try{
+
+    public boolean borrar(Usuario usuario) {
+        try {
             usuarioRepositorio.delete(usuario);
-        }catch (Exception e){
+            return true;
+        } catch (Exception e) {
             return false;
         }
-        return true;
     }
 
+
+    public void guardar(Usuario usuario) {
+        try {
+            usuarioRepositorio.save(usuario);
+        } catch (Exception e) {
+            throw new RuntimeException("Error al guardar el usuario", e);
+        }
+    }
 }
