@@ -21,6 +21,14 @@ public class Usuario {
     @Column(name = "usu_nombre", nullable = false)
     private String nombre;
 
+    @Column(name = "usu_apellido")
+    private String apellido;
+
     @Column(name = "usu_contraseña", nullable = false)
     private String contraseña;
+
+    @Column(name ="usu_correo")
+    private String correo;
+
+
 }

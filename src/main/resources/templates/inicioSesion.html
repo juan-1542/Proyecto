@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio de Sesión</title>
+  <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f2f5;
+    }
+    .login-container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        width: 350px;
+        text-align: center;
+    }
+    .login-container h2 {
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 24px;
+    }
+    .login-container input {
+        width: 100%;
+        padding: 12px;
+        margin: 12px 0;
+        border: 1px solid #d0d0d0;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+    .login-container button {
+        width: 100%;
+        padding: 12px;
+        background-color: #02E038;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+    .login-container button:hover {
+        background-color: #02E038;
+    }
+    .error-message {
+        color: #d9534f;
+        font-size: 14px;
+        margin-top: 15px;
+    }
+    .register-link {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #555;
+    }
+    .register-link a {
+        color: #02E038;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .register-link a:hover {
+        text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-container">
+  <h2>Inicio de Sesión</h2>
+  <form action="/iniciar-sesion" method="post">
+    <input type="text" id="username" name="usuario" placeholder="Nombre de usuario" required>
+    <input type="password" id="password" name="contrasena" placeholder="Contraseña" required>
+    <button type="submit">Iniciar Sesión</button>
+  </form>
+
+  <!-- Mensaje de error (muestra un mensaje si hay error) -->
+  <div class="error-message" th:if="${error}">
+    <span th:text="${error}"></span>
+  </div>
+
+  <div class="register-link">
+    <p>¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -32,7 +32,13 @@ public class UsuarioControlador {
     @PostMapping("/registro")
     public String procesarRegistroUsuario(@ModelAttribute("usuario") Usuario usuario) {
         usuarioServicio.guardar(usuario);
-        return "redirect:/GestionInventarios";
+        return "redirect:/iniciosesion";
+    }
+
+    @GetMapping("/iniciosesion")
+    public String mostrarInicioSesion(Model model) {
+
+        return "iniciosesion";
     }
 }
 
