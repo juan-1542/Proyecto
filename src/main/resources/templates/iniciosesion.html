@@ -51,7 +51,7 @@
         transition: background-color 0.3s ease;
     }
     .login-container button:hover {
-        background-color: #02E038;
+        background-color: #02C62F;
     }
     .error-message {
         color: #d9534f;
@@ -77,19 +77,20 @@
 
 <div class="login-container">
   <h2>Inicio de Sesión</h2>
-  <form action="/iniciar-sesion" method="post">
+
+  <form th:action="@{/iniciosesion}" method="post">
     <input type="text" id="username" name="usuario" placeholder="Nombre de usuario" required>
     <input type="password" id="password" name="contrasena" placeholder="Contraseña" required>
     <button type="submit">Iniciar Sesión</button>
   </form>
 
-  <!-- Mensaje de error (muestra un mensaje si hay error) -->
+
   <div class="error-message" th:if="${error}">
     <span th:text="${error}"></span>
   </div>
 
   <div class="register-link">
-    <p>¿No tienes una cuenta? <a href="/registro">Regístrate aquí</a></p>
+    <p>¿No tienes una cuenta? <a th:href="@{/registro}">Regístrate aquí</a></p>
   </div>
 </div>
 
