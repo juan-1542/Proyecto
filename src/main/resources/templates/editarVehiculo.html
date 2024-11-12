@@ -89,7 +89,7 @@
 <div class="form-container">
     <h1>Editar Vehículo</h1>
 
-    <form th:action="@{/vehiculos/editar/{id}(id=${vehiculo.id})}" method="post">
+    <form th:action="@{/vehiculo/editar/{id}(id=${vehiculo.id})}" method="post">
         <label for="marca">Marca:</label>
         <input type="text" id="marca" name="marca" th:value="${vehiculo.marca}" required>
 
@@ -105,7 +105,7 @@
         <button type="submit">Actualizar Vehículo</button>
     </form>
 
-    <a href="/vehiculos" class="btn-volver">Volver a la lista de vehículos</a>
+    <a href="/vehiculo" class="btn-volver">Volver a la lista de vehículos</a>
 </div>
 </body>
 </html>

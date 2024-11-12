@@ -116,17 +116,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="vehiculo : ${vehiculos}">
+        <tr th:each="vehiculo : ${vehiculo}">
             <td th:text="${vehiculo.id}"></td>
             <td th:text="${vehiculo.marca}"></td>
             <td th:text="${vehiculo.modelo}"></td>
             <td th:text="${vehiculo.ano}"></td>
             <td th:text="${vehiculo.precio}"></td>
             <td>
-                <a th:href="@{/vehiculos/editar/{id}(id=${vehiculo.id})}">
+                <a th:href="@{/vehiculo/editar/{id}(id=${vehiculo.id})}">
                     <button class="btn-editar">Editar</button>
                 </a>
-                <a th:href="@{/vehiculos/eliminar/{id}(id=${vehiculo.id})}">
+                <a th:href="@{/vehiculo/eliminar/{id}(id=${vehiculo.id})}">
                     <button class="btn-eliminar">Eliminar</button>
                 </a>
             </td>
@@ -134,7 +134,7 @@
         </tbody>
     </table>
 
-    <a href="/vehiculos" class="btn-volver">Volver a la lista de vehículos</a>
+    <a href="/vehiculo" class="btn-volver">Volver a la lista de vehículos</a>
 </div>
 </body>
 </html>
