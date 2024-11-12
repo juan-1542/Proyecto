@@ -1,114 +1,109 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar Vehículo</title>
+    <title>Vehículos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
+            color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
+        h1 {
             text-align: center;
+            font-size: 2em;
             margin-bottom: 20px;
-            color: #333;
         }
 
         table {
-            width: 100%;
+            width: 80%;
+            margin: 0 auto;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th, td {
-            padding: 12px 15px;
-            text-align: left;
+            padding: 12px;
+            text-align: center;
             border: 1px solid #ddd;
         }
 
         th {
             background-color: #4CAF50;
             color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
+            font-weight: bold;
         }
 
         tr:hover {
-            background-color: #ddd;
+            background-color: #f1f1f1;
         }
 
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .button-container a {
-            text-decoration: none;
-        }
-
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
+        .btn-editar, .btn-eliminar {
+            padding: 8px 16px;
+            font-size: 14px;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block; /* Asegura que estén en línea */
         }
 
-        button:hover {
-            background-color: #45a049;
+        .btn-editar {
+            background-color: #28a745;
+            margin-right: 5px; /* Añade espacio a la derecha de Editar */
         }
 
-        .btn-danger {
-            background-color: #f44336;
+        .btn-editar:hover {
+            background-color: #218838;
+            transform: scale(1.05);
         }
 
-        .btn-danger:hover {
-            background-color: #e53935;
+        .btn-eliminar {
+            background-color: #dc3545;
         }
 
-        .btn-back {
-            background-color: #2196F3;
+        .btn-eliminar:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
         }
 
-        .btn-back:hover {
-            background-color: #1976D2;
+        .btn-volver {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            width: 200px;
+            margin: 20px auto;
+            font-size: 1em;
         }
 
-        .action-buttons {
-            display: flex;
-            gap: 10px;
+        .btn-volver:hover {
+            background-color: #5a6268;
         }
     </style>
 </head>
 <body>
+<div>
+    <h1>Listado de Vehículos</h1>
 
-<div class="container">
-    <h2>Listado de Vehículos</h2>
-
-    <!-- Tabla con la lista de vehículos -->
     <table>
         <thead>
         <tr>
@@ -121,33 +116,25 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Aquí se insertarán los vehículos desde el backend (ejemplo estático para ilustrar) -->
-        <tr>
-            <td>3</td>
-            <td>gatito</td>
-            <td>gatito2</td>
-            <td>4555</td>
-            <td>20000000</td>
-            <td class="action-buttons">
-                <a href="/vehiculos/editar/3">
-                    <button>Editar</button>
+        <tr th:each="vehiculo : ${vehiculos}">
+            <td th:text="${vehiculo.id}"></td>
+            <td th:text="${vehiculo.marca}"></td>
+            <td th:text="${vehiculo.modelo}"></td>
+            <td th:text="${vehiculo.ano}"></td>
+            <td th:text="${vehiculo.precio}"></td>
+            <td>
+                <a th:href="@{/vehiculos/editar/{id}(id=${vehiculo.id})}">
+                    <button class="btn-editar">Editar</button>
                 </a>
-                <a href="/vehiculos/eliminar/3">
-                    <button class="btn-danger">Eliminar</button>
+                <a th:href="@{/vehiculos/eliminar/{id}(id=${vehiculo.id})}">
+                    <button class="btn-eliminar">Eliminar</button>
                 </a>
             </td>
         </tr>
-        <!-- Fin de ejemplo -->
         </tbody>
     </table>
 
-    <!-- Botón para volver a la lista -->
-    <div class="button-container">
-        <a href="/vehiculos">
-            <button class="btn-back">Volver a la lista de vehículos</button>
-        </a>
-    </div>
+    <a href="/vehiculos" class="btn-volver">Volver a la lista de vehículos</a>
 </div>
-
 </body>
 </html>
