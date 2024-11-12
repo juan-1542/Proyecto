@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Vehículo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .button-container a {
+            text-decoration: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+        }
+
+        .btn-danger:hover {
+            background-color: #e53935;
+        }
+
+        .btn-back {
+            background-color: #2196F3;
+        }
+
+        .btn-back:hover {
+            background-color: #1976D2;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Listado de Vehículos</h2>
+
+    <!-- Tabla con la lista de vehículos -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Año</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Aquí se insertarán los vehículos desde el backend (ejemplo estático para ilustrar) -->
+        <tr>
+            <td>3</td>
+            <td>gatito</td>
+            <td>gatito2</td>
+            <td>4555</td>
+            <td>20000000</td>
+            <td class="action-buttons">
+                <a href="/vehiculos/editar/3">
+                    <button>Editar</button>
+                </a>
+                <a href="/vehiculos/eliminar/3">
+                    <button class="btn-danger">Eliminar</button>
+                </a>
+            </td>
+        </tr>
+        <!-- Fin de ejemplo -->
+        </tbody>
+    </table>
+
+    <!-- Botón para volver a la lista -->
+    <div class="button-container">
+        <a href="/vehiculos">
+            <button class="btn-back">Volver a la lista de vehículos</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
