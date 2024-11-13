@@ -14,22 +14,22 @@ public class VehiculoServicio {
 
     private final VehiculoRepositorio vehiculoRepositorio;
 
-    // Método para guardar un vehículo
+
     public Vehiculo guardar(Vehiculo vehiculo) {
         return vehiculoRepositorio.save(vehiculo);
     }
 
-    // Método para obtener todos los vehículos
+
     public List<Vehiculo> obtenerTodos() {
         return vehiculoRepositorio.findAll();
     }
 
-    // Método para obtener un vehículo por su id
+
     public Optional<Vehiculo> obtenerPorId(Long id) {
         return vehiculoRepositorio.findById(id);
     }
 
-    // Método para eliminar un vehículo por su id
+
     public void eliminarPorId(Long id) {
         vehiculoRepositorio.deleteById(id);
     }

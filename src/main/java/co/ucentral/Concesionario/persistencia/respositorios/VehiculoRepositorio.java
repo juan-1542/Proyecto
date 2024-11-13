@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface VehiculoRepositorio extends JpaRepository<Vehiculo, Long> {
-    // Aquí podrías agregar consultas personalizadas si fuera necesario
+
 }

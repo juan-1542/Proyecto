@@ -1,9 +1,6 @@
 package co.ucentral.Concesionario.persistencia.entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +15,14 @@ import lombok.Setter;
 public class Usuario {
 
     @Id
-    @Column(name = "usu_nombre", nullable = false)
+    @Column(name = "usu_nombre")
     private String nombre;
 
     @Column(name = "usu_apellido")
     private String apellido;
 
-    @Column(name = "usu_contraseña", nullable = false)
-    private String contraseña;
+    @Column(name = "usu_contrasena",nullable = false)
+    private String contrasena;
 
     @Column(name ="usu_correo")
     private String correo;

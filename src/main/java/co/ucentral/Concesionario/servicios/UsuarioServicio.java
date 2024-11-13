@@ -35,12 +35,12 @@ public class UsuarioServicio {
     }
 
 
-    public Usuario validarUsuario(String nombre, String contraseña) {
+    public Usuario validarUsuario(String nombre, String contrasena) {
 
         Usuario usuario = usuarioRepositorio.findByNombre(nombre);
 
 
-        if (usuario != null && usuario.getContraseña().equals(contraseña)) {
+        if (usuario != null && usuario.getContrasena().equals(contrasena)) {
             return usuario;
         }
         return null;

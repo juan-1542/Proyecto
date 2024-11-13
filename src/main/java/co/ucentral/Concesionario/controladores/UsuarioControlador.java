@@ -26,7 +26,7 @@ public class UsuarioControlador {
     @PostMapping("/registro")
     public String procesarRegistroUsuario(@ModelAttribute("usuario") Usuario usuario) {
         usuarioServicio.guardar(usuario);
-        return "iniciosesion";
+        return "redirect:/iniciosesion";
     }
 
 
@@ -39,7 +39,7 @@ public class UsuarioControlador {
 
     @PostMapping("/iniciosesion")
     public String procesarInicioSesion(@ModelAttribute("usuario") Usuario usuario, Model model) {
-        Usuario usuarioAutenticado = usuarioServicio.validarUsuario(usuario.getNombre(), usuario.getContraseña());
+        Usuario usuarioAutenticado = usuarioServicio.validarUsuario(usuario.getNombre(), usuario.getContrasena());
         if (usuarioAutenticado != null) {
             return "vehiculo";
         } else {
