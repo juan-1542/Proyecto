@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehículos</title>
+    <title>Proveedores</title>
     <style>
         * {
             margin: 0;
@@ -52,7 +52,19 @@
         button:hover {
             background-color: #45a049;
         }
-        /* Estilos para el modal */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
         .modal {
             display: none;
             position: fixed;
@@ -93,36 +105,55 @@
 <body>
 
 <div class="container">
-    <h2>Gestión de Vehículos</h2>
+    <h2>Gestión de Proveedores</h2>
 
     <div class="button-container">
-        <!-- Botón para abrir el modal de registro de vehículos -->
-        <button onclick="openModal()">Registrar Vehículo</button>
+        <!-- Botón para abrir el modal de registro de proveedores -->
+        <button onclick="openModal()">Registrar Proveedor</button>
 
-        <!-- Botón para redirigir a la emisión de facturas -->
-        <a href="/proveedor">
-            <button>Proveedores</button>
+        <!-- Botón para generar informe de proveedores -->
+        <a href="/proveedor/informe">
+            <button>Generar Informe</button>
         </a>
 
-
-        <a href="/vehiculo/consulta">
-            <button>Consultar Vehículo</button>
+        <!-- Botón para regresar a la página de Vehículos -->
+        <a href="/vehiculo">
+            <button>Regresar a Vehículos</button>
         </a>
     </div>
+
+    <h3>Lista de Proveedores</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="proveedor : ${proveedores}">
+            <td th:text="${proveedor.nombre}"></td>
+            <td th:text="${proveedor.contacto}"></td>
+            <td>
+                <a href="/proveedor/editar/{id}">Editar</a> |
+                <a href="/proveedor/eliminar/{id}">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-
+<!-- Modal para registro de proveedores -->
 <div id="modalRegistro" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            Registrar Vehículo
+            Registrar Proveedor
         </div>
         <div class="modal-body">
-            <form action="/vehiculo/registro" method="POST">
-                <input type="text" name="marca" placeholder="Marca" required>
-                <input type="text" name="modelo" placeholder="Modelo" required>
-                <input type="number" name="ano" placeholder="Año" required>
-                <input type="number" name="precio" placeholder="Precio" required>
+            <form action="/proveedor/registro" method="POST">
+                <input type="text" name="nombre" placeholder="Nombre del Proveedor" required>
+                <input type="text" name="contacto" placeholder="Contacto del Proveedor" required>
                 <div class="modal-footer">
                     <button type="submit">Registrar</button>
                     <button type="button" onclick="closeModal()">Cerrar</button>
