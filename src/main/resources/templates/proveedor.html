@@ -3,184 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proveedores</title>
+    <title>Editar Proveedor</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            padding: 20px;
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            min-height: 100vh;
         }
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #fff;
+
+        .form-container {
+            background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
+            width: 400px;
         }
+
         h2 {
             text-align: center;
-            margin-bottom: 30px;
-            color: #333;
+            margin-bottom: 20px;
         }
-        .button-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            margin-top: 30px;
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
         button {
-            padding: 15px 30px;
+            width: 100%;
+            padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 16px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 16px;
         }
+
         button:hover {
             background-color: #45a049;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+
+        .delete-button {
+            background-color: #f44336;
+            margin-top: 10px;
         }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-        .modal-content {
-            background-color: #fff;
-            margin: 5% auto;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 400px;
-        }
-        .modal-header {
-            font-size: 18px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        .modal-body input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .modal-footer {
-            display: flex;
-            justify-content: space-between;
+
+        .delete-button:hover {
+            background-color: #e53935;
         }
     </style>
 </head>
 <body>
+<div class="form-container">
+    <h2>Editar Proveedor</h2>
+    <form th:action="@{/proveedor/editar/{id}(id=${proveedor.id})}" th:object="${proveedor}" method="post">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" th:value="${proveedor.nombre}" required>
 
-<div class="container">
-    <h2>Gestión de Proveedores</h2>
+        <label for="contacto">Contacto</label>
+        <input type="text" id="contacto" name="contacto" th:value="${proveedor.contacto}" required>
 
-    <div class="button-container">
-        <!-- Botón para abrir el modal de registro de proveedores -->
-        <button onclick="openModal()">Registrar Proveedor</button>
-
-        <!-- Botón para generar informe de proveedores -->
-        <a href="/proveedor/informe">
-            <button>Generar Informe</button>
-        </a>
-
-        <!-- Botón para regresar a la página de Vehículos -->
-        <a href="/vehiculo">
-            <button>Regresar a Vehículos</button>
-        </a>
-    </div>
-
-    <h3>Lista de Proveedores</h3>
-    <table>
-        <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Contacto</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="proveedor : ${proveedores}">
-            <td th:text="${proveedor.nombre}"></td>
-            <td th:text="${proveedor.contacto}"></td>
-            <td>
-                <a href="/proveedor/editar/{id}">Editar</a> |
-                <a href="/proveedor/eliminar/{id}">Eliminar</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+        <button type="submit">Actualizar</button>
+    </form>
+    <form th:action="@{/proveedor/eliminar/{id}(id=${proveedor.id})}" method="get">
+        <button type="submit" class="delete-button">Eliminar</button>
+    </form>
 </div>
-
-<!-- Modal para registro de proveedores -->
-<div id="modalRegistro" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            Registrar Proveedor
-        </div>
-        <div class="modal-body">
-            <form action="/proveedor/registro" method="POST">
-                <input type="text" name="nombre" placeholder="Nombre del Proveedor" required>
-                <input type="text" name="contacto" placeholder="Contacto del Proveedor" required>
-                <div class="modal-footer">
-                    <button type="submit">Registrar</button>
-                    <button type="button" onclick="closeModal()">Cerrar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Función para abrir el modal de registro
-    function openModal() {
-        document.getElementById("modalRegistro").style.display = "block";
-    }
-
-    // Función para cerrar el modal de registro
-    function closeModal() {
-        document.getElementById("modalRegistro").style.display = "none";
-    }
-
-    // Cerrar el modal si se hace clic fuera de él
-    window.onclick = function(event) {
-        if (event.target == document.getElementById("modalRegistro")) {
-            closeModal();
-        }
-    }
-</script>
-
 </body>
 </html>

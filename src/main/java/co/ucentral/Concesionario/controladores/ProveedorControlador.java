@@ -5,10 +5,7 @@ import co.ucentral.Concesionario.persistencia.entidades.Proveedor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,10 +32,15 @@ public class ProveedorControlador {
     public String registrarProveedor(@ModelAttribute("proveedor") Proveedor proveedor) {
         try {
             proveedorServicio.guardar(proveedor);
-            return "redirect:/proveedor"; // Redirige a la lista de proveedores después de registrar
+            return "redirect:/proveedor";
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
         }
+    }
+    @PostMapping("/eliminar/{id}")
+    public String eliminarProveedor(@PathVariable("id") Long id) {
+        proveedorServicio.eliminarProveedor(id);
+        return "redirect:/proveedor";
     }
 }
