@@ -3,85 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Proveedor</title>
+    <title>Gestión de Proveedores</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f9;
             color: #333;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             min-height: 100vh;
         }
 
-        .form-container {
+        .container {
+            width: 100%;
+            max-width: 800px;
             background-color: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            margin-top: 20px;
         }
 
         h2 {
             text-align: center;
             margin-bottom: 20px;
+            color: #4CAF50;
+            font-size: 2em;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .button-container a, button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            text-align: center;
+        }
+
+        .button-container button:hover, .button-container a:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        a.btn {
+            padding: 8px 12px;
+            font-size: 14px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        a.btn-editar {
+            background-color: #28a745;
+        }
+
+        a.btn-editar:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        a.btn-eliminar {
+            background-color: #dc3545;
+        }
+
+        a.btn-eliminar:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal-header {
+            font-size: 20px;
+            margin-bottom: 10px;
             font-weight: bold;
+            color: #4CAF50;
         }
 
-        input {
+        .modal-body input {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
+        .modal-footer button {
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        button:hover {
+        .modal-footer .btn-registrar {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .modal-footer .btn-registrar:hover {
             background-color: #45a049;
         }
 
-        .delete-button {
-            background-color: #f44336;
-            margin-top: 10px;
+        .modal-footer .btn-cerrar {
+            background-color: #dc3545;
+            color: white;
         }
 
-        .delete-button:hover {
-            background-color: #e53935;
+        .modal-footer .btn-cerrar:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
-<div class="form-container">
-    <h2>Editar Proveedor</h2>
-    <form th:action="@{/proveedor/editar/{id}(id=${proveedor.id})}" th:object="${proveedor}" method="post">
-        <label for="nombre">Nombre</label>
-        <input type="text" id="nombre" name="nombre" th:value="${proveedor.nombre}" required>
 
-        <label for="contacto">Contacto</label>
-        <input type="text" id="contacto" name="contacto" th:value="${proveedor.contacto}" required>
+<div class="container">
+    <h2>Gestión de Proveedores</h2>
 
-        <button type="submit">Actualizar</button>
-    </form>
-    <form th:action="@{/proveedor/eliminar/{id}(id=${proveedor.id})}" method="get">
-        <button type="submit" class="delete-button">Eliminar</button>
-    </form>
+    <div class="button-container">
+        <button onclick="openModal()">Registrar Proveedor</button>
+        <a href="/proveedor/informe">Generar Informe</a>
+        <a href="/vehiculo">Vehículos</a>
+    </div>
+
+    <h3>Lista de Proveedores</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="proveedor : ${proveedores}">
+            <td th:text="${proveedor.nombre}"></td>
+            <td th:text="${proveedor.contacto}"></td>
+            <td>
+                <!-- Enlace de edición con el ID del proveedor -->
+                <a href="/proveedor/editar/{id}" th:href="@{/proveedor/editar/{id}(id=${proveedor.id})}">
+                    <button>editar</button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
+
+<div id="modalRegistro" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            Registrar Proveedor
+        </div>
+        <div class="modal-body">
+            <form action="/proveedor/registro" method="POST">
+                <input type="text" name="nombre" placeholder="Nombre del Proveedor" required>
+                <input type="text" name="contacto" placeholder="Contacto del Proveedor" required>
+                <div class="modal-footer">
+                    <button type="submit" class="btn-registrar">Registrar</button>
+                    <button type="button" class="btn-cerrar" onclick="closeModal()">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openModal() {
+        document.getElementById("modalRegistro").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("modalRegistro").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("modalRegistro")) {
+            closeModal();
+        }
+    }
+</script>
+
 </body>
 </html>
