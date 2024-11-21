@@ -23,7 +23,7 @@ public class Pedido {
     private String descripcion;
 
     @Column(name = "estado", nullable = false)
-    private String estado; // Ejemplo: "Pendiente", "Entregado"
+    private String estado;
 
     @ManyToOne
     @JoinColumn(name = "proveedor_id", nullable = false)

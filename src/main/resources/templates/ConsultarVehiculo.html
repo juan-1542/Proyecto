@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehículos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,12 +60,12 @@
             color: white;
             font-weight: bold;
             transition: background-color 0.3s, transform 0.3s;
-            display: inline-block; /* Asegura que estén en línea */
+            display: inline-block;
         }
 
         .btn-editar {
             background-color: #28a745;
-            margin-right: 5px; /* Añade espacio a la derecha de Editar */
+            margin-right: 5px;
         }
 
         .btn-editar:hover {
@@ -81,7 +82,7 @@
             transform: scale(1.05);
         }
 
-        .btn-volver {
+        .btn-volver, .btn-reporte {
             background-color: #6c757d;
             color: white;
             padding: 10px 15px;
@@ -95,7 +96,7 @@
             font-size: 1em;
         }
 
-        .btn-volver:hover {
+        .btn-volver:hover, .btn-reporte:hover {
             background-color: #5a6268;
         }
     </style>
@@ -134,7 +135,11 @@
         </tbody>
     </table>
 
+
+    <a href="/reporte" class="btn-reporte">Generar Reporte</a>
+
     <a href="/vehiculo" class="btn-volver">Volver a la lista de vehículos</a>
 </div>
+
 </body>
 </html>

@@ -21,7 +21,7 @@ public class VehiculoControlador {
     public String mostrarListaVehiculos(Model model) {
         try {
             List<Vehiculo> vehiculos = vehiculoServicio.obtenerTodos();
-            model.addAttribute("vehiculo", vehiculos);
+            model.addAttribute("vehiculos", vehiculos);
             model.addAttribute("vehiculo", new Vehiculo());
             return "vehiculo";
         } catch (Exception e) {

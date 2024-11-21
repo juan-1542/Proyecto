@@ -16,6 +16,7 @@ public class ProveedorControlador {
 
     private final ProveedorServicio proveedorServicio;
 
+    // Método para mostrar la lista de proveedores
     @GetMapping
     public String mostrarProveedores(Model model) {
         try {
@@ -28,6 +29,7 @@ public class ProveedorControlador {
         }
     }
 
+    // Método para registrar un nuevo proveedor
     @PostMapping("/registro")
     public String registrarProveedor(@ModelAttribute("proveedor") Proveedor proveedor) {
         try {
@@ -39,6 +41,7 @@ public class ProveedorControlador {
         }
     }
 
+    // Método para eliminar un proveedor
     @PostMapping("/eliminar/{id}")
     public String eliminarProveedor(@PathVariable("id") Long id) {
         try {
@@ -50,6 +53,7 @@ public class ProveedorControlador {
         }
     }
 
+    // Método para mostrar el formulario de edición de un proveedor
     @GetMapping("/editar/{id}")
     public String mostrarFormularioEdicion(@PathVariable("id") Long id, Model model) {
         try {
@@ -63,6 +67,7 @@ public class ProveedorControlador {
         }
     }
 
+    // Método para actualizar un proveedor
     @PostMapping("/editar/{id}")
     public String actualizarProveedor(@PathVariable("id") Long id, @ModelAttribute Proveedor proveedorActualizado) {
         try {
@@ -76,5 +81,13 @@ public class ProveedorControlador {
             e.printStackTrace();
             return "error"; // Vista en caso de error
         }
+    }
+
+    // Método para redirigir a la página de vehículos
+    @GetMapping("/vehiculo")
+    public String mostrarVehiculos(Model model) {
+        // Lógica para obtener los vehículos si es necesario
+        // model.addAttribute("vehiculos", vehiculos);
+        return "vehiculo"; // Asegúrate de que "vehiculo" sea el nombre del archivo HTML correspondiente
     }
 }
