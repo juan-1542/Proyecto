@@ -6,27 +6,26 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "proveedores")
-public class Proveedor {
+@Table(name = "pedidos")
+public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
+    @Column(name = "descripcion", nullable = false)
+    private String descripcion;
 
-    @Column(name = "contacto", nullable = false)
-    private String contacto;
+    @Column(name = "estado", nullable = false)
+    private String estado;
 
-    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
-    private List<Pedido> pedidos;
+    @ManyToOne
+    @JoinColumn(name = "proveedor_id", nullable = false)
+    private Proveedor proveedor;
 }

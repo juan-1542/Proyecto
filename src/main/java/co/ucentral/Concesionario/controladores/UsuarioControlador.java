@@ -41,7 +41,7 @@ public class UsuarioControlador {
     public String procesarInicioSesion(@ModelAttribute("usuario") Usuario usuario, Model model) {
         Usuario usuarioAutenticado = usuarioServicio.validarUsuario(usuario.getNombre(), usuario.getContrasena());
         if (usuarioAutenticado != null) {
-            return "vehiculo";
+            return "proveedor";
         } else {
 
             model.addAttribute("error", "Credenciales incorrectas");
