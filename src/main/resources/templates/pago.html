@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pagos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .table-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+        }
+        .table-container h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .btn-eliminar-todos, .btn-comprar {
+            background-color: #e74c3c;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .btn-comprar {
+            background-color: #4CAF50;
+        }
+        .btn-eliminar-todos:hover {
+            background-color: #c0392b;
+        }
+        .btn-comprar:hover {
+            background-color: #388e3c;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="table-container">
+    <h2>Lista de Pagos</h2>
+
+    <!-- Contenedor de botones -->
+    <div class="btn-container">
+        <!-- Botón para borrar todos los pagos -->
+        <form th:action="@{/pago/eliminarTodos}" method="post" style="display:inline;">
+            <button type="submit" class="btn-eliminar-todos">Borrar todos los pagos</button>
+        </form>
+        <!-- Botón para realizar una nueva acción de compra -->
+        <a href="/pedido/listar" class="btn-comprar">Ir a Pedidos</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID Pago</th>
+            <th>Monto</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pago : ${pagos}">
+            <td th:text="${pago.id}"></td>
+            <td th:text="${pago.monto}"></td>
+            <td th:text="${pago.estado}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
