@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehículos</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -16,6 +15,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            flex-direction: column;
         }
 
         h1 {
@@ -82,7 +82,7 @@
             transform: scale(1.05);
         }
 
-        .btn-volver, .btn-reporte {
+        .btn-volver {
             background-color: #6c757d;
             color: white;
             padding: 10px 15px;
@@ -96,50 +96,66 @@
             font-size: 1em;
         }
 
-        .btn-volver:hover, .btn-reporte:hover {
+        .btn-volver:hover {
             background-color: #5a6268;
+        }
+
+        .btn-pedidos {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            width: 200px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .btn-pedidos:hover {
+            background-color: #e0a800;
         }
     </style>
 </head>
 <body>
-<div>
-    <h1>Listado de Vehículos</h1>
+<h1>Listado de Vehículos</h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Año</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="vehiculo : ${vehiculo}">
-            <td th:text="${vehiculo.id}"></td>
-            <td th:text="${vehiculo.marca}"></td>
-            <td th:text="${vehiculo.modelo}"></td>
-            <td th:text="${vehiculo.ano}"></td>
-            <td th:text="${vehiculo.precio}"></td>
-            <td>
-                <a th:href="@{/vehiculo/editar/{id}(id=${vehiculo.id})}">
-                    <button class="btn-editar">Editar</button>
-                </a>
-                <a th:href="@{/vehiculo/eliminar/{id}(id=${vehiculo.id})}">
-                    <button class="btn-eliminar">Eliminar</button>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Corregido el nombre de la variable vehiculos -->
+    <tr th:each="vehiculo : ${vehiculos}">
+        <td th:text="${vehiculo.id}"></td>
+        <td th:text="${vehiculo.marca}"></td>
+        <td th:text="${vehiculo.modelo}"></td>
+        <td th:text="${vehiculo.ano}"></td>
+        <td th:text="${vehiculo.precio}"></td>
+        <td>
+            <a th:href="@{/vehiculo/editar/{id}(id=${vehiculo.id})}">
+                <button class="btn-editar">Editar</button>
+            </a>
+            <a th:href="@{/vehiculo/eliminar/{id}(id=${vehiculo.id})}">
+                <button class="btn-eliminar">Eliminar</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
 
-    <a href="/reporte" class="btn-reporte">Generar Reporte</a>
+<a href="/pedido/listar" class="btn-pedidos">Pedidos</a>
 
-    <a href="/vehiculo" class="btn-volver">Volver a la lista de vehículos</a>
-</div>
-
+<a href="/vehiculo" class="btn-volver">Volver a la lista de vehículos</a>
 </body>
 </html>

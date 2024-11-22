@@ -1,64 +1,75 @@
 package co.ucentral.Concesionario.controladores;
 
-import co.ucentral.Concesionario.persistencia.entidades.Pedido;
+import co.ucentral.Concesionario.persistencia.entidades.Pedidos;
+import co.ucentral.Concesionario.persistencia.entidades.Vehiculo;
 import co.ucentral.Concesionario.servicios.PedidoServicio;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import co.ucentral.Concesionario.servicios.VehiculoServicio;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController
+@AllArgsConstructor
+@Controller
 @RequestMapping("/pedido")
 public class PedidoControlador {
 
-    @Autowired
-    private PedidoServicio pedidoServicio;
+    private final PedidoServicio pedidoServicio;
+    private final VehiculoServicio vehiculoServicio;
 
-
-    @GetMapping
-    public ResponseEntity<List<Pedido>> obtenerTodosLosPedidos() {
-        List<Pedido> pedidos = pedidoServicio.obtenerTodosLosPedidos();
-        return new ResponseEntity<>(pedidos, HttpStatus.OK);
+    // Mostrar todos los pedidos
+    @GetMapping("/listar")
+    public String listarPedidos(Model model) {
+        List<Pedidos> pedidos = pedidoServicio.obtenerTodos();
+        model.addAttribute("pedidos", pedidos);
+        return "listarPedidos"; // Vista donde se muestran los pedidos
     }
 
-    // Obtener un pedido por su ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Pedido> obtenerPedidoPorId(@PathVariable Long id) {
-        Optional<Pedido> pedido = pedidoServicio.obtenerPedidoPorId(id);
-        return pedido.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    // Mostrar formulario de creación de pedido
+    @GetMapping("/crear")
+    public String crearPedido(Model model) {
+        model.addAttribute("vehiculos", vehiculoServicio.obtenerTodos()); // Mostrar vehículos disponibles
+        model.addAttribute("pedido", new Pedidos());
+        return "crearPedido"; // Vista con formulario de creación de pedido
     }
 
-    // Crear un nuevo pedido
-    @PostMapping
-    public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido) {
-        Pedido nuevoPedido = pedidoServicio.guardarPedido(pedido);
-        return new ResponseEntity<>(nuevoPedido, HttpStatus.CREATED);
-    }
 
-    // Actualizar un pedido existente
-    @PutMapping("/{id}")
-    public ResponseEntity<Pedido> actualizarPedido(@PathVariable Long id, @RequestBody Pedido pedido) {
-        if (pedidoServicio.obtenerPedidoPorId(id).isPresent()) {
-            pedido.setId(id);
-            Pedido pedidoActualizado = pedidoServicio.actualizarPedido(pedido);
-            return new ResponseEntity<>(pedidoActualizado, HttpStatus.OK);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    @PostMapping("/crear")
+    public String guardarPedido(@RequestParam Long vehiculoId, @ModelAttribute Pedidos pedido) {
+        // Obtener el Vehículo usando el ID proporcionado
+        Vehiculo vehiculo = vehiculoServicio.obtenerPorId(vehiculoId)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+
+
+        pedido.setVehiculo(vehiculo);
+
+
+        if (pedido.getEstado() == null || pedido.getEstado().isEmpty()) {
+            pedido.setEstado("Pendiente");  // Valor predeterminado
         }
+
+
+        pedidoServicio.guardar(pedido);
+
+
+        return "redirect:/pedido/listar"; // Redirige a la lista de pedidos
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> eliminarPedido(@PathVariable Long id) {
-        if (pedidoServicio.obtenerPedidoPorId(id).isPresent()) {
-            pedidoServicio.eliminarPedido(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    // Eliminar un pedido
+    @GetMapping("/eliminar/{id}")
+    public String eliminarPedido(@PathVariable("id") Long id) {
+        pedidoServicio.eliminarPorId(id);
+        return "redirect:/pedido/listar"; // Redirigir a la lista de pedidos
+    }
+
+    // Ver detalles de un pedido
+    @GetMapping("/ver/{id}")
+    public String verPedido(@PathVariable("id") Long id, Model model) {
+        Pedidos pedido = pedidoServicio.obtenerPorId(id).orElse(null);
+        model.addAttribute("pedido", pedido);
+        return "verPedido"; // Vista que muestra los detalles del pedido
     }
 }

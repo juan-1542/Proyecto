@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,6 +26,5 @@ public class Proveedor {
     @Column(name = "contacto", nullable = false)
     private String contacto;
 
-    @OneToMany(mappedBy = "proveedor", cascade = CascadeType.ALL)
-    private List<Pedido> pedidos;
+
 }
