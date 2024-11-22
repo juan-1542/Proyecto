@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Pedido de Vehículo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #2c3e50; /* Verde oscuro */
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #2c3e50; /* Verde oscuro */
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-group input[type="date"] {
+            padding: 9px;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #2c3e50; /* Verde oscuro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #34495e; /* Verde más oscuro al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Registro de Pedido</h2>
+    <form id="orderForm">
+        <div class="form-group">
+            <label for="orderId">ID del Pedido</label>
+            <input type="text" id="orderId" name="orderId" required readonly>
+        </div>
+        <div class="form-group">
+            <label for="vehicleId">ID del Vehículo</label>
+            <input type="text" id="vehicleId" name="vehicleId" required>
+        </div>
+        <div class="form-group">
+            <label for="quantity">Cantidad de Vehículos</label>
+            <input type="number" id="quantity" name="quantity" required min="1">
+        </div>
+        <div class="form-group">
+            <label for="description">Descripción del Pedido</label>
+            <input type="text" id="description" name="description" required>
+        </div>
+        <button type="submit" class="submit-button">Registrar Pedido</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('orderForm').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevenir el envío del formulario
+
+        // Obtener los datos del formulario
+        const orderId = document.getElementById('orderId').value || Math.floor(Math.random() * 10000); // Generar ID aleatorio si no se tiene
+        const vehicleId = document.getElementById('vehicleId').value;
+        const quantity = document.getElementById('quantity').value;
+        const description = document.getElementById('description').value;
+
+        // Crear un objeto de pedido
+        const newOrder = {
+            orderId: orderId,
+            vehicleId: vehicleId,
+            quantity: quantity,
+            description: description
+        };
+
+        // Usar fetch para enviar los datos al servidor (si es necesario)
+        // fetch('/pedido/registrar', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(newOrder)
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log('Pedido registrado:', data);
+
+            // Generar el PDF después de registrar el pedido
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Agregar contenido al PDF
+            doc.text("Confirmación de Pedido", 20, 20);
+            doc.text(`ID del Pedido: ${orderId}`, 20, 30);
+            doc.text(`ID del Vehículo: ${vehicleId}`, 20, 40);
+            doc.text(`Cantidad de Vehículos: ${quantity}`, 20, 50);
+            doc.text(`Descripción del Pedido: ${description}`, 20, 60);
+
+            // Descargar el PDF
+            doc.save("Confirmacion_Pedido.pdf");
+        // })
+        // .catch(error => {
+        //     console.error('Error al registrar el pedido:', error);
+        // });
+    });
+</script>
+
+</body>
+</html>
