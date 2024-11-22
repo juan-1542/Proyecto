@@ -26,11 +26,6 @@ public class ProveedorServicio {
         return proveedorRepositorio.findById(id);
     }
 
-
-    public Optional<Proveedor> obtenerPorIdConPedidos(Long id) {
-        return proveedorRepositorio.findByIdWithPedidos(id);
-    }
-
     public void eliminarProveedor(Long id) {
         proveedorRepositorio.deleteById(id);
     }

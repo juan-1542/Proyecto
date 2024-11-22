@@ -1,10 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Lista de Pedidos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .table-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80%;
+        }
+        .table-container h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-registrar, .btn-volver {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        .btn-registrar:hover, .btn-volver:hover {
+            background-color: #388e3c;
+        }
+        .btn-volver {
+            background-color: #6c757d;
+        }
+    </style>
 </head>
 <body>
+
+<div class="table-container">
+    <h2>Lista de Pedidos</h2>
+
+    <!-- Botón para registrar un nuevo pedido -->
+    <a href="/pedido/crear" class="btn-registrar">Registrar Pedido</a>
+
+    <!-- Botón para volver a la consulta de vehículos -->
+    <a href="/vehiculo/consulta" class="btn-volver">Volver a la consulta de Vehículos</a>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID Pedido</th>
+            <th>Vehículo</th>
+            <th>Cantidad</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pedido : ${pedidos}">
+            <td th:text="${pedido.id}"></td>
+            <td th:text="${pedido.vehiculo.marca} + ' ' + ${pedido.vehiculo.modelo}"></td>
+            <td th:text="${pedido.cantidad}"></td>
+            <td th:text="${pedido.descripcion}"></td>
+            <td th:text="${pedido.estado}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 
 </body>
 </html>

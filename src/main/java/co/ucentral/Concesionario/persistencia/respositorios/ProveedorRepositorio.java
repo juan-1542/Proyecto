@@ -11,7 +11,4 @@ import java.util.Optional;
 @Repository
 public interface ProveedorRepositorio extends JpaRepository<Proveedor, Long> {
 
-
-    @Query("SELECT p FROM Proveedor p LEFT JOIN FETCH p.pedidos WHERE p.id = :id")
-    Optional<Proveedor> findByIdWithPedidos(@Param("id") Long id);
 }
