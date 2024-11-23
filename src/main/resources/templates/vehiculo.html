@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Estilos para el modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+        }
+        .modal-header {
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .modal-body input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Gestión de Vehículos</h2>
+
+    <div class="button-container">
+
+        <button onclick="openModal()">Registrar Vehículo</button>
+
+
+        <a href="/proveedor">
+            <button>Proveedores</button>
+        </a>
+
+
+        <a href="/vehiculo/consulta">
+            <button>Consultar Vehículo</button>
+        </a>
+    </div>
+</div>
+
+
+<div id="modalRegistro" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            Registrar Vehículo
+        </div>
+        <div class="modal-body">
+            <form action="/vehiculo/registro" method="POST">
+                <input type="text" name="marca" placeholder="Marca" required>
+                <input type="text" name="modelo" placeholder="Modelo" required>
+                <input type="number" name="ano" placeholder="Año" required>
+                <input type="number" name="precio" placeholder="Precio" required>
+                <div class="modal-footer">
+                    <button type="submit">Registrar</button>
+                    <button type="button" onclick="closeModal()">Cerrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Función para abrir el modal de registro
+    function openModal() {
+        document.getElementById("modalRegistro").style.display = "block";
+    }
+
+    // Función para cerrar el modal de registro
+    function closeModal() {
+        document.getElementById("modalRegistro").style.display = "none";
+    }
+
+    // Cerrar el modal si se hace clic fuera de él
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("modalRegistro")) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>

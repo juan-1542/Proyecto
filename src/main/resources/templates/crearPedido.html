@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Pedido de Vehículo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #4CAF50; /* Verde claro */
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #4CAF50; /* Verde claro */
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .form-group input[type="date"] {
+            padding: 9px;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #4CAF50; /* Verde claro */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #388e3c; /* Verde más oscuro */
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Registrar Pedido</h2>
+    <form action="/pedido/crear" method="post">
+        <!-- Vehículo: Mostrar todos los vehículos disponibles -->
+        <div class="form-group">
+            <label for="vehiculoId">ID del Vehículo</label>
+            <select id="vehiculoId" name="vehiculoId" required>
+                <option th:each="vehiculo : ${vehiculos}"
+                        th:value="${vehiculo.id}"
+                        th:text="${vehiculo.marca} + ' ' + ${vehiculo.modelo}"></option>
+            </select>
+        </div>
+
+        <!-- Cantidad de vehículos -->
+        <div class="form-group">
+            <label for="quantity">Cantidad de Vehículos</label>
+            <input type="number" id="quantity" name="cantidad" required min="1">
+        </div>
+
+        <!-- Descripción del pedido -->
+        <div class="form-group">
+            <label for="description">Descripción del Pedido</label>
+            <input type="text" id="description" name="descripcion" required>
+        </div>
+
+        <!-- Botón para registrar el pedido y redirigir al listado de pedidos -->
+        <button type="submit" class="submit-button">Registrar Pedido</button>
+    </form>
+</div>
+
+</body>
+</html>

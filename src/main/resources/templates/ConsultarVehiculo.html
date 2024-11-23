@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehículos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .btn-editar, .btn-eliminar {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+
+        .btn-editar {
+            background-color: #28a745;
+            margin-right: 5px;
+        }
+
+        .btn-editar:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .btn-eliminar {
+            background-color: #dc3545;
+        }
+
+        .btn-eliminar:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .btn-volver {
+            background-color: #6c757d;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            width: 200px;
+            margin: 20px auto;
+            font-size: 1em;
+        }
+
+        .btn-volver:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-pedidos {
+            background-color: #ffc107;
+            color: black;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+            width: 200px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .btn-pedidos:hover {
+            background-color: #e0a800;
+        }
+    </style>
+</head>
+<body>
+<h1>Listado de Vehículos</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Año</th>
+        <th>Precio</th>
+        <th>Acciones</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Corregido el nombre de la variable vehiculos -->
+    <tr th:each="vehiculo : ${vehiculos}">
+        <td th:text="${vehiculo.id}"></td>
+        <td th:text="${vehiculo.marca}"></td>
+        <td th:text="${vehiculo.modelo}"></td>
+        <td th:text="${vehiculo.ano}"></td>
+        <td th:text="${vehiculo.precio}"></td>
+        <td>
+            <a th:href="@{/vehiculo/editar/{id}(id=${vehiculo.id})}">
+                <button class="btn-editar">Editar</button>
+            </a>
+            <a th:href="@{/vehiculo/eliminar/{id}(id=${vehiculo.id})}">
+                <button class="btn-eliminar">Eliminar</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<a href="/pedido/listar" class="btn-pedidos">Pedidos</a>
+
+<a href="/vehiculo" class="btn-volver">Volver a la lista de vehículos</a>
+</body>
+</html>

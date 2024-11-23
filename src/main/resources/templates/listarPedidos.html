@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pedidos</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .table-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+        }
+
+        .table-container h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        /* Messages Styles */
+        .mensaje {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .mensaje-exito {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .mensaje-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Button Styles */
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .btn-registrar, .btn-volver {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-registrar:hover, .btn-volver:hover {
+            background-color: #388e3c;
+        }
+
+        .btn-volver {
+            background-color: #6c757d;
+        }
+
+        .btn-comprar {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .btn-comprar:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="table-container">
+    <h2>Lista de Pedidos</h2>
+
+    <!-- Mensajes de éxito o error -->
+    <div th:if="${mensajeExito}" class="mensaje mensaje-exito" th:text="${mensajeExito}"></div>
+    <div th:if="${mensajeError}" class="mensaje mensaje-error" th:text="${mensajeError}"></div>
+
+    <!-- Botones de acción -->
+    <div class="btn-container">
+        <a href="/pedido/crear" class="btn-registrar">Registrar Pedido</a>
+        <a href="/vehiculo/consulta" class="btn-volver">Volver a la consulta de Vehículos</a>
+    </div>
+
+    <!-- Tabla de Pedidos -->
+    <table>
+        <thead>
+        <tr>
+            <th>ID Pedido</th>
+            <th>Vehículo</th>
+            <th>Cantidad</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pedido : ${pedidos}">
+            <td th:text="${pedido.id}"></td>
+            <td th:text="${pedido.vehiculo.marca} + ' ' + ${pedido.vehiculo.modelo}"></td>
+            <td th:text="${pedido.cantidad}"></td>
+            <td th:text="${pedido.descripcion}"></td>
+            <td th:text="${pedido.estado}"></td>
+            <td>
+                <!-- Botón Comprar -->
+                <form th:action="@{/pedido/comprar}" method="post" style="margin-top: 10px;">
+                    <input type="hidden" name="pedidoId" th:value="${pedido.id}" />
+                    <button type="submit" class="btn-comprar">Comprar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
